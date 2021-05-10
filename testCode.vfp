@@ -1,0 +1,56 @@
+<apex:page Controller="ChatPopupPageController" lightningStyleSheets="true" >
+     <style type="text/css">
+        td,th {border: 1px solid #dddddd;text-align: left;padding: 8px;}
+        th{ background-color: #efefef;}
+        table{color:black; margin-bottom:30px; font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}
+        button{border: 1px solid transparent;padding: 0;font-size: .75rem;line-height: 1.875rem;border-radius: .25rem;
+        padding-left: 1rem;padding-right: 1rem;border-color: rgb(221, 219, 218);background-color: rgb(255, 255, 255);}
+        .header-container{margin:1%} 
+        .search-box{text-align:left;display:inline-block;}
+        .new-case{float:right;display:inline-block;}
+        .body-container{overflow-x:auto;}
+    </style>
+    <apex:form >
+        <apex:pageblock >
+        <div class='header-container'>
+            <div class='search-box'>
+                <apex:inputText value="{!searchBoxstring}" />
+                <apex:commandButton value="Search" action="{!searchbox}" />
+            </div>
+            <div class='new-case'>
+                <button>
+                    <apex:outputLink value="/lightning/o/Case/new?count=1">New Case</apex:outputLink>
+                </button>
+            </div>
+        </div>
+        <div class='body-container'>
+            <table >
+                <tr style="font-weight:bold">
+                    <th>Case ID</th>
+                    <th>Case Number</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Date/Time Opened</th>
+                    
+                </tr>
+                <apex:repeat value="{!result}" var="case" id="theRepeat">
+                    <tr>
+                        <td><apex:outputLink value="/{!case.id}">{!case.id}</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!case.id}">{!case.CaseNumber}</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!case.id }">{!case.Subject }</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!case.id}">{!case.Status}</apex:outputLink></td>
+                        <td><apex:outputLink value="/{!case.id}">{!case.CreatedDate}</apex:outputLink></td>
+                    </tr>
+                </apex:repeat>
+            </table>
+        </div>
+        </apex:pageblock>
+   </apex:form>
+            <apex:outputPanel rendered="{!displayPopup}" >
+                <script type="text/javascript">
+                var error='{!errorMessage}';
+                alert(error);
+                </script>
+            </apex:outputPanel>
+
+</apex:page>
